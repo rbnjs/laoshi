@@ -10,14 +10,14 @@ from laoshi.translator import Translator
 from laoshi.speaker import Speaker, Speech
 
 FIELDS_LIST = [
-    {'name': 'Original'},
-    {'name': 'Traditional'},
-    {'name': 'Pinyin'},
-    {'name': 'Translation'},
-    {'name': 'Sound'}
+    {"name": "Original"},
+    {"name": "Traditional"},
+    {"name": "Pinyin"},
+    {"name": "Translation"},
+    {"name": "Sound"},
 ]
 
-MODEL_CSS = '''
+MODEL_CSS = """
 .card {
     font-family: arial;
     font-size: 48px;
@@ -26,49 +26,52 @@ MODEL_CSS = '''
     background-color: white;
     line-height: 2em;
 }
-'''
+"""
 
 ANSWER = '{{FrontSide}}<hr id="answer">{{Original}}<br>{{Traditional}} \
 <br>{{Pinyin}}<br>{{Translation}}</div>'
 
 CHINESE_TO_ENGLISH = genanki.Model(
     1450786248,
-    'Chinese to English',
+    "Chinese to English",
     fields=FIELDS_LIST,
     css=MODEL_CSS,
     templates=[
         {
-            'name': 'Card {{Original}} English to Chinese',
-            'qfmt': '<div class="card">{{Original}}<br>{{Traditional}}',
-            'afmt': ANSWER,
+            "name": "Card {{Original}} English to Chinese",
+            "qfmt": '<div class="card">{{Original}}<br>{{Traditional}}',
+            "afmt": ANSWER,
         },
-    ])
+    ],
+)
 
 ENGLISH_TO_CHINESE = genanki.Model(
     1480566997,
-    'English to Chinese',
+    "English to Chinese",
     fields=FIELDS_LIST,
     css=MODEL_CSS,
     templates=[
         {
-            'name': 'Card {{Original}} English to Chinese',
-            'qfmt': '<div class="card">{{Translation}}',
-            'afmt': ANSWER,
+            "name": "Card {{Original}} English to Chinese",
+            "qfmt": '<div class="card">{{Translation}}',
+            "afmt": ANSWER,
         },
-    ])
+    ],
+)
 
 AUDIO_ONLY = genanki.Model(
     1899733999,
-    'Audio Only',
+    "Audio Only",
     fields=FIELDS_LIST,
     css=MODEL_CSS,
     templates=[
         {
-            'name': 'Card {{Original}} Audio',
-            'qfmt': '<div class="card">{{Sound}}',
-            'afmt': ANSWER,
+            "name": "Card {{Original}} Audio",
+            "qfmt": '<div class="card">{{Sound}}',
+            "afmt": ANSWER,
         },
-    ])
+    ],
+)
 
 
 def get_unique_id() -> int:
@@ -78,16 +81,18 @@ def get_unique_id() -> int:
 
 class FlashCard:
     """Class which holds all the information needed for
-       flashcards
+    flashcards
     """
 
-    def __init__(self,  # pylint: disable=too-many-arguments
-                 simplified: str,
-                 traditional: str,
-                 pinyin: str,
-                 translation: str,
-                 sound_file: str,
-                 sound_path: str):
+    def __init__(
+        self,  # pylint: disable=too-many-arguments
+        simplified: str,
+        traditional: str,
+        pinyin: str,
+        translation: str,
+        sound_file: str,
+        sound_path: str,
+    ):
         self.simplified = simplified
         self.traditional = traditional
         self.pinyin = pinyin
@@ -97,12 +102,7 @@ class FlashCard:
 
     def get_fields(self) -> list[str]:
         """Get fields from Flashcard except from sound files."""
-        return [
-                self.simplified,
-                self.traditional,
-                self.pinyin,
-                self.translation
-                ]
+        return [self.simplified, self.traditional, self.pinyin, self.translation]
 
     def get_media_path(self) -> str:
         """Get media path"""
@@ -152,13 +152,14 @@ class FlashCardGenerator:
             FlashCard: Returns an instantiated FlashCard
         """
         speech: Speech = self.create_sound(hanzi)
-        return FlashCard(simplified=Converter.to_simplified(hanzi),
-                         traditional=hanzi,
-                         pinyin=Converter.to_pinyin(hanzi),
-                         translation=Translator().translate(hanzi),
-                         sound_path=speech.path,
-                         sound_file=speech.name
-                         )
+        return FlashCard(
+            simplified=Converter.to_simplified(hanzi),
+            traditional=hanzi,
+            pinyin=Converter.to_pinyin(hanzi),
+            translation=Translator().translate(hanzi),
+            sound_path=speech.path,
+            sound_file=speech.name,
+        )
 
     def from_simplified(self, hanzi: str) -> FlashCard:
         """
@@ -170,13 +171,14 @@ class FlashCardGenerator:
             FlashCard: Returns an instantiated FlashCard
         """
         speech: Speech = self.create_sound(hanzi)
-        return FlashCard(simplified=hanzi,
-                         traditional=Converter.to_traditional(hanzi),
-                         pinyin=Converter.to_pinyin(hanzi),
-                         translation=Translator().translate(hanzi),
-                         sound_path=speech.path,
-                         sound_file=speech.name
-                         )
+        return FlashCard(
+            simplified=hanzi,
+            traditional=Converter.to_traditional(hanzi),
+            pinyin=Converter.to_pinyin(hanzi),
+            translation=Translator().translate(hanzi),
+            sound_path=speech.path,
+            sound_file=speech.name,
+        )
 
     def __exit__(self, *_args):
         """
@@ -198,14 +200,24 @@ class DeckManager:  # pylint: disable=too-few-public-methods
         deck = genanki.Deck(get_unique_id(), self.deck_name)
         package = genanki.Package(deck)
         output = f"{deck.name}.apkg"
-        deck.add_note(genanki.Note(guid=get_unique_id(),
-                      model=CHINESE_TO_ENGLISH,
-                      fields=flashcard.get_fields()))
-        deck.add_note(genanki.Note(guid=get_unique_id(),
-                      model=ENGLISH_TO_CHINESE,
-                      fields=flashcard.get_fields()))
-        deck.add_note(genanki.Note(guid=get_unique_id(),
-                      model=AUDIO_ONLY,
-                      fields=flashcard.get_fields()))
+        deck.add_note(
+            genanki.Note(
+                guid=get_unique_id(),
+                model=CHINESE_TO_ENGLISH,
+                fields=flashcard.get_fields(),
+            )
+        )
+        deck.add_note(
+            genanki.Note(
+                guid=get_unique_id(),
+                model=ENGLISH_TO_CHINESE,
+                fields=flashcard.get_fields(),
+            )
+        )
+        deck.add_note(
+            genanki.Note(
+                guid=get_unique_id(), model=AUDIO_ONLY, fields=flashcard.get_fields()
+            )
+        )
         package.media_files = [flashcard.get_media_path()]
         package.write_to_file(output)

@@ -3,7 +3,6 @@ from laoshi import flashcardgenerator
 
 
 class FlashCardGeneratorTest(unittest.TestCase):
-
     def test_from_traditional(self):
         with flashcardgenerator.FlashCardGenerator() as generator:
             flashcard = generator.from_traditional("龍")
