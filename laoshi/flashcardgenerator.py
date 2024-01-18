@@ -84,8 +84,8 @@ class FlashCard:
     flashcards
     """
 
-    def __init__(
-        self,  # pylint: disable=too-many-arguments
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
         simplified: str,
         traditional: str,
         pinyin: str,
