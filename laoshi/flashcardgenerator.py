@@ -1,9 +1,10 @@
-import random
-import genanki
+"""Module which provides the FlashCard generator class."""
 import tempfile
+import random
 import uuid
 import os
 import shutil
+import genanki
 from laoshi.converter import Converter
 from laoshi.translator import Translator
 from laoshi.speaker import Speaker, Speech
@@ -71,12 +72,16 @@ AUDIO_ONLY = genanki.Model(
 
 
 def get_unique_id() -> int:
+    """Creates a unique ID"""
     return random.randrange(1 << 30, 1 << 31)
 
 
 class FlashCard:
+    """Class which holds all the information needed for
+       flashcards
+    """
 
-    def __init__(self,
+    def __init__(self,  # pylint: disable=too-many-arguments
                  simplified: str,
                  traditional: str,
                  pinyin: str,
@@ -91,6 +96,7 @@ class FlashCard:
         self.sound_path = sound_path
 
     def get_fields(self) -> list[str]:
+        """Get fields from Flashcard except from sound files."""
         return [
                 self.simplified,
                 self.traditional,
@@ -99,10 +105,12 @@ class FlashCard:
                 ]
 
     def get_media_path(self) -> str:
+        """Get media path"""
         return self.sound_path
 
 
 class FlashCardGenerator:
+    """Generates flashcards"""
 
     def __init__(self, tempfolder: str = ""):
         """
@@ -178,12 +186,15 @@ class FlashCardGenerator:
             shutil.rmtree(self.tempfolder)
 
 
-class DeckManager:
+class DeckManager:  # pylint: disable=too-few-public-methods
+    """Manages and creates Anki Decks"""
 
     def __init__(self, deck_name: str):
+        """Init method"""
         self.deck_name = deck_name
 
     def create_deck(self, flashcard: FlashCard):
+        """Creates a deck from one FlashCard"""
         deck = genanki.Deck(get_unique_id(), self.deck_name)
         package = genanki.Package(deck)
         output = f"{deck.name}.apkg"

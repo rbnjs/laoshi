@@ -19,12 +19,13 @@ class Speech:
         self.path = path
 
     def get_sound(self) -> BytesIO:
+        """Get sound as Bytes"""
         sound = BytesIO()
         self.speech.write_to_fp(sound)
         return sound
 
 
-class Speaker:
+class Speaker:  # pylint: disable=too-few-public-methods
     """Main class for speaker module"""
 
     @staticmethod

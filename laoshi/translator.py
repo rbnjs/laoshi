@@ -2,7 +2,7 @@
 from googletrans import Translator as GTranslator
 
 
-class Translator:
+class Translator:  # pylint: disable=too-few-public-methods
     """Translator class"""
 
     def __init__(self):
