@@ -12,6 +12,7 @@ pypinyin = "^0.50.0"
 googletrans = "4.0.0rc1"
 gtts = "^2.5.0"
 genanki = "^0.13.1"
+requests = "^2.31.0"
 
 
 [tool.poetry.group.dev.dependencies]
