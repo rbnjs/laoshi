@@ -1,5 +1,12 @@
 import click
 from laoshi.converter import Converter
+from laoshi.translator import Translator
+from laoshi.flashcardgenerator import FlashCardGenerator
+from laoshi.deckmanager import DeckManager
+
+SIMPLIFIED = "simplified"
+TRADITIONAL = "traditional"
+CHINESE_OPTIONS = [TRADITIONAL, SIMPLIFIED, "pinyin"]
 
 
 @click.group()
@@ -11,17 +18,64 @@ def cli_group():
 @click.option(
     "-t",
     "--to",
-    type=click.Choice(["traditional", "simplified", "pinyin"]),
+    default="pinyin",
+    type=click.Choice(CHINESE_OPTIONS),
 )
 @click.argument("word")
-def cc(to: str, word: str) -> str:
+def cc(to: str, word: str):
     match to:
         case "traditional":
-            return click.echo(Converter.to_traditional(word))
+            click.echo(Converter.to_traditional(word))
         case "simplified":
-            return click.echo(Converter.to_simplified(word))
+            click.echo(Converter.to_simplified(word))
         case "pinyin":
-            return click.echo(Converter.to_pinyin(word))
+            click.echo(Converter.to_pinyin(word))
+
+
+@cli_group.command(help="Translate a phrase")
+@click.option(
+    "-t",
+    "--to",
+    default="en",
+)
+@click.argument("phrase")
+def translate(to: str, phrase: str):
+    click.echo(Translator().translate(phrase, dest=to))
+
+
+@cli_group.group()
+def manage_deck():
+    pass
+
+
+@manage_deck.command()
+@click.option(
+    "-c",
+    "--character",
+    default="simplified",
+    type=click.Choice([SIMPLIFIED, TRADITIONAL]),
+)
+@click.argument("deck_name")
+@click.argument("seed")
+def create_deck(character: str, deck_name: str, seed: str):
+    with FlashCardGenerator() as generator:
+        flashcard = generator.create_flashcard(character, seed)
+        DeckManager(deck_name).create_deck(flashcard)
+
+
+@manage_deck.command()
+@click.option(
+    "-c",
+    "--character",
+    default="simplified",
+    type=click.Choice([SIMPLIFIED, TRADITIONAL]),
+)
+@click.argument("deck_name")
+@click.argument("word")
+def add_note(character: str, deck_name: str, word: str):
+    with FlashCardGenerator() as generator:
+        flashcard = generator.create_flashcard(character, word)
+        DeckManager(deck_name).add_note(flashcard)
 
 
 if __name__ == "__main__":

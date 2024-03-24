@@ -36,7 +36,7 @@ class FlashCard:
             self.traditional,
             self.pinyin,
             self.translation,
-            self.sound_path,
+            self.sound_file,
         ]
 
     def get_media_path(self) -> str:
@@ -76,6 +76,13 @@ class FlashCardGenerator:
         path = f"{self.tempfolder}/{name}"
         speech.save(f"[sound:{name}]", path)
         return speech
+
+    def create_flashcard(self, character: str, hanzi: str) -> FlashCard:
+        match character:
+            case "simplified":
+                return self.from_simplified(hanzi)
+            case "traditional":
+                return self.from_traditional(hanzi)
 
     def from_traditional(self, hanzi: str) -> FlashCard:
         """
