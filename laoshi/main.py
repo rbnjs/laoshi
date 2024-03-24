@@ -1,3 +1,4 @@
+"""Main file from laoshi"""
 import click
 from laoshi.converter import Converter
 from laoshi.translator import Translator
@@ -11,7 +12,7 @@ CHINESE_OPTIONS = [TRADITIONAL, SIMPLIFIED, "pinyin"]
 
 @click.group()
 def cli_group():
-    pass
+    """cli group function for click"""
 
 
 @cli_group.command(help="Convert characters")
@@ -23,6 +24,7 @@ def cli_group():
 )
 @click.argument("word")
 def cc(to: str, word: str):
+    """Change character function"""
     match to:
         case "traditional":
             click.echo(Converter.to_traditional(word))
@@ -40,12 +42,13 @@ def cc(to: str, word: str):
 )
 @click.argument("phrase")
 def translate(to: str, phrase: str):
+    """Translate a phrase"""
     click.echo(Translator().translate(phrase, dest=to))
 
 
 @cli_group.group()
 def manage_deck():
-    pass
+    """Manage deck group"""
 
 
 @manage_deck.command()
@@ -58,6 +61,7 @@ def manage_deck():
 @click.argument("deck_name")
 @click.argument("seed")
 def create_deck(character: str, deck_name: str, seed: str):
+    """Create a deck function for click"""
     with FlashCardGenerator() as generator:
         flashcard = generator.create_flashcard(character, seed)
         DeckManager(deck_name).create_deck(flashcard)
@@ -73,6 +77,7 @@ def create_deck(character: str, deck_name: str, seed: str):
 @click.argument("deck_name")
 @click.argument("word")
 def add_note(character: str, deck_name: str, word: str):
+    """add note function for click"""
     with FlashCardGenerator() as generator:
         flashcard = generator.create_flashcard(character, word)
         DeckManager(deck_name).add_note(flashcard)

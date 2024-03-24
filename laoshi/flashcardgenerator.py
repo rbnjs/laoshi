@@ -78,6 +78,7 @@ class FlashCardGenerator:
         return speech
 
     def create_flashcard(self, character: str, hanzi: str) -> FlashCard:
+        """Create FlashCard"""
         match character:
             case "simplified":
                 return self.from_simplified(hanzi)
