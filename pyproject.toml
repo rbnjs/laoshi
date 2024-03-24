@@ -13,6 +13,7 @@ googletrans = "4.0.0rc1"
 gtts = "^2.5.0"
 genanki = "^0.13.1"
 requests = "^2.31.0"
+click = "^8.1.7"
 
 
 [tool.poetry.group.dev.dependencies]

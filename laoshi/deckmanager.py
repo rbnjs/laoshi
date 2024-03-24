@@ -27,7 +27,7 @@ MODEL_CSS = """
 """
 
 ANSWER = '{{FrontSide}}<hr id="answer">{{Simplified}}<br>{{Traditional}} \
-<br>{{Pinyin}}<br>{{Translation}}</div>'
+<br>{{Pinyin}}<br>{{Translation}}</div><br>{{Sound}}</div>'
 
 CHINESE_TO_ENGLISH = genanki.Model(
     1459389108,
