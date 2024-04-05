@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "laoshi"
-version = "0.0.0"
+version = "0.0.3"
 description = ""
 authors = ["Ruben Serradas <rubenserradas@gmail.com>"]
 readme = "README.md"
@@ -20,11 +20,8 @@ pylint = "^3.0.3"
 black = "^23.12.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 laoshi = 'laoshi.main:cli_group'
-
-[tool.poetry-dynamic-versioning]
-enable = true

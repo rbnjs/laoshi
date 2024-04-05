@@ -1,8 +1,8 @@
 name: Python package
 on:
   push:
-    tags:
-      - "v*.*.*"
+    paths:
+      - pyproject.toml
 jobs:
   ci:
     strategy:
@@ -14,8 +14,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
       - name: Build and publish to pypi
         uses: JRubics/poetry-publish@v2.0
         with:
           pypi_token: ${{ secrets.PYPI_TOKEN }}
-          plugins: "poetry-dynamic-versioning[plugin]"
