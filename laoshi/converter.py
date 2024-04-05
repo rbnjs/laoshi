@@ -1,6 +1,6 @@
 """Module which provides the Converter class to convert characters"""
 from functools import reduce
-from opencc import OpenCC
+from StarCC import PresetConversion
 from pypinyin import pinyin
 
 
@@ -11,12 +11,12 @@ class Converter:
     @staticmethod
     def to_traditional(hanzi: str) -> str:
         """Transform simplified chinese characters to traditional"""
-        return Converter.convert("s2t.json", hanzi)
+        return Converter.convert(src="cn", dst="tw", hanzi=hanzi)
 
     @staticmethod
     def to_simplified(hanzi: str) -> str:
         """Transform traditional chinese characters to simplified"""
-        return Converter.convert("t2s.json", hanzi)
+        return Converter.convert(src="tw", dst="cn", hanzi=hanzi)
 
     @staticmethod
     def to_pinyin(hanzi: str) -> str:
@@ -26,7 +26,7 @@ class Converter:
         return reduce(lambda a, b: a + b, flat_pinyin)
 
     @staticmethod
-    def convert(ccdict: str, hanzi: str) -> str:
+    def convert(src: str, dst: str, hanzi: str) -> str:
         """Generic convertion method"""
-        converter = OpenCC(ccdict)
-        return converter.convert(hanzi)
+        convert = PresetConversion(src=src, dst=dst, with_phrase=True)
+        return convert(hanzi)
