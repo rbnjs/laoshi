@@ -12,7 +12,7 @@ CHINESE_OPTIONS = [TRADITIONAL, SIMPLIFIED, "pinyin"]
 
 @click.group()
 def cli_group():
-    """cli group function for click"""
+    """cli application to learn chinese."""
 
 
 @cli_group.command(help="Convert characters")
@@ -40,15 +40,19 @@ def cc(to: str, word: str):
     "--to",
     default="en",
 )
+@click.option('--pinyin', '-p', is_flag=True)
 @click.argument("phrase")
-def translate(to: str, phrase: str):
+def translate(to: str, pinyin: bool, phrase: str):
     """Translate a phrase"""
-    click.echo(Translator().translate(phrase, dest=to))
+    translation = Translator().translate(phrase, dest=to)
+    if pinyin:
+        translation = translation + f' ({Converter.to_pinyin(phrase)})'
+    click.echo(translation)
 
 
 @cli_group.group()
 def manage_deck():
-    """Manage deck group"""
+    """Manage deck subcommand"""
 
 
 @manage_deck.command()
@@ -61,7 +65,7 @@ def manage_deck():
 @click.argument("deck_name")
 @click.argument("seed")
 def create_deck(character: str, deck_name: str, seed: str):
-    """Create a deck function for click"""
+    """Create a deck command from one seed word or phrase"""
     with FlashCardGenerator() as generator:
         flashcard = generator.create_flashcard(character, seed)
         DeckManager(deck_name).create_deck(flashcard)
@@ -77,7 +81,7 @@ def create_deck(character: str, deck_name: str, seed: str):
 @click.argument("deck_name")
 @click.argument("word")
 def add_note(character: str, deck_name: str, word: str):
-    """add note function for click"""
+    """add a note to an Anki deck with a word"""
     with FlashCardGenerator() as generator:
         flashcard = generator.create_flashcard(character, word)
         DeckManager(deck_name).add_note(flashcard)
