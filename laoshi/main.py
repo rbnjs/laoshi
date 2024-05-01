@@ -40,13 +40,13 @@ def cc(to: str, word: str):
     "--to",
     default="en",
 )
-@click.option('--pinyin', '-p', is_flag=True)
+@click.option("--pinyin", "-p", is_flag=True)
 @click.argument("phrase")
 def translate(to: str, pinyin: bool, phrase: str):
     """Translate a phrase"""
     translation = Translator().translate(phrase, dest=to)
     if pinyin:
-        translation = translation + f' ({Converter.to_pinyin(phrase)})'
+        translation = translation + f" ({Converter.to_pinyin(phrase)})"
     click.echo(translation)
 
 
