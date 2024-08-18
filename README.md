@@ -6,7 +6,7 @@ experience while I use the terminal, so I made this app.
 ## Installation
 
 ```commandline
-pip install laoshi
+pipx install laoshi
 ```
 
 If you want to manage your AnkiDecks with laoshi, you'll need:
