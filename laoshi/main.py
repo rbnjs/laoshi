@@ -87,7 +87,7 @@ def add_note(character: str, deck_name: str, word: str):
         flashcard = generator.create_flashcard(character, word)
         DeckManager(deck_name).add_note(flashcard)
 
+register_repl(cli_group)
 
 if __name__ == "__main__":
-    register_repl(cli_group)
     cli_group()
