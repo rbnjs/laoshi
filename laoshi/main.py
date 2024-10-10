@@ -1,5 +1,6 @@
 """Main file from laoshi"""
 import click
+from click_repl import register_repl
 from laoshi.converter import Converter
 from laoshi.translator import Translator
 from laoshi.flashcardgenerator import FlashCardGenerator
@@ -88,4 +89,5 @@ def add_note(character: str, deck_name: str, word: str):
 
 
 if __name__ == "__main__":
+    register_repl(cli_group)
     cli_group()
