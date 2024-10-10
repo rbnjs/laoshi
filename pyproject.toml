@@ -14,6 +14,7 @@ genanki = "^0.13.1"
 requests = "^2.31.0"
 click = "^8.1.7"
 starcc = "^0.0.5"
+click-repl = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^3.0.3"
