@@ -1,28 +1,34 @@
-[tool.poetry]
+name = "laoshi"
+version = "0.2.2"
+description = "CLI application for learning Chinese."
+authors = ["Ruben Serradas <ruben@serradas.org>"]
+readme = "README.md"
+
+[project]
+authors = [
+    {name = "Ruben Serradas", email = "ruben@serradas.org"},
+]
+requires-python = "<4.0,>=3.10"
+dependencies = [
+    "pypinyin<1.0.0,>=0.50.0",
+		"googletrans==4.0.2",
+    "gtts<3.0.0,>=2.5.0",
+    "genanki<1.0.0,>=0.13.1",
+    "requests<3.0.0,>=2.31.0",
+    "click<9.0.0,>=8.1.7",
+    "starcc<1.0.0,>=0.0.5",
+    "click-repl<1.0.0,>=0.3.0",
+]
 name = "laoshi"
 version = "0.2.2"
 description = ""
-authors = ["Ruben Serradas <rubenserradas@gmail.com>"]
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-pypinyin = "^0.50.0"
-googletrans = "4.0.0rc1"
-gtts = "^2.5.0"
-genanki = "^0.13.1"
-requests = "^2.31.0"
-click = "^8.1.7"
-starcc = "^0.0.5"
-click-repl = "^0.3.0"
+[project.scripts]
+laoshi = "laoshi.main:cli_group"
 
-[tool.poetry.group.dev.dependencies]
-pylint = "^3.0.3"
-black = "^23.12.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-laoshi = 'laoshi.main:cli_group'
+[dependency-groups]
+dev = [
+    "pylint<4.0.0,>=3.0.3",
+    "black<24.0.0,>=23.12.0",
+]
