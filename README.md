@@ -1,3 +1,7 @@
+# Note
+
+Project moved to [GitLab](https://gitlab.com/rbnjs/laoshi)
+
 # laoshi (老師)
 
 CLI application for learning Chinese. I wanted to have an interactive
