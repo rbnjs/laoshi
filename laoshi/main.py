@@ -5,6 +5,7 @@ from laoshi.converter import Converter
 from laoshi.translator import Translator
 from laoshi.flashcardgenerator import FlashCardGenerator
 from laoshi.deckmanager import DeckManager
+import asyncio
 
 SIMPLIFIED = "simplified"
 TRADITIONAL = "traditional"
